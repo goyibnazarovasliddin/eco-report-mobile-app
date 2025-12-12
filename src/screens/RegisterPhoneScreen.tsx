@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeft, Chrome, Phone } from 'lucide-react-native';
 
@@ -41,7 +41,7 @@ export function RegisterPhoneScreen({ navigation }: any) {
                         <TouchableOpacity
                             className="w-full h-14 bg-[#37a16a] rounded-2xl items-center justify-center shadow-lg shadow-[#37a16a]/20"
                             onPress={() => navigation.navigate('RegisterData')}
-                            activeOpacity={0.8}
+                            activeOpacity={0.9}
                         >
                             <Text className="text-white font-bold text-lg">Davom etish</Text>
                         </TouchableOpacity>
@@ -54,9 +54,13 @@ export function RegisterPhoneScreen({ navigation }: any) {
 
                         <TouchableOpacity
                             className="w-full h-14 bg-white border border-gray-200 rounded-2xl items-center flex-row justify-center gap-3"
-                            activeOpacity={0.8}
+                            activeOpacity={0.9}
                         >
-                            <Chrome color="#EA4335" size={24} />
+                            <Image
+                                source={require('../../assets/images/google-icon.png')}
+                                style={{ width: 24, height: 24 }}
+                                resizeMode="contain"
+                            />
                             <Text className="text-gray-700 font-bold text-lg">Google bilan davom etish</Text>
                         </TouchableOpacity>
                     </View>

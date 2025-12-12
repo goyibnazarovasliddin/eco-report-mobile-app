@@ -75,7 +75,7 @@ export function NotificationsScreen({ navigation }: any) {
         <SafeAreaView className="flex-1 bg-white">
             {/* Header */}
             <View className="px-6 py-4 border-b border-gray-100 flex-row items-center gap-4">
-                <TouchableOpacity onPress={() => navigation.goBack()} className="p-2 bg-gray-50 rounded-xl">
+                <TouchableOpacity onPress={() => navigation.goBack()} className="p-2 bg-gray-50 rounded-xl" activeOpacity={0.8}>
                     <ArrowLeft color="#374151" size={24} />
                 </TouchableOpacity>
                 <Text className="text-xl font-bold text-gray-900">Bildirishnomalar</Text>
@@ -94,6 +94,7 @@ export function NotificationsScreen({ navigation }: any) {
                                     navigation.navigate('ReportDetail', { id: notification.id });
                                 }
                             }}
+                            activeOpacity={0.8}
                         >
                             <View className="flex-row gap-3">
                                 <View className="mt-1">

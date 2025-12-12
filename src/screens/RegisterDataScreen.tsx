@@ -9,7 +9,7 @@ export function RegisterDataScreen({ navigation }: any) {
 
     return (
         <SafeAreaView className="flex-1 bg-white p-6">
-            <TouchableOpacity onPress={() => navigation.goBack()} className="mb-6">
+            <TouchableOpacity onPress={() => navigation.goBack()} className="mb-6" activeOpacity={0.8}>
                 <ArrowLeft color="#374151" size={24} />
             </TouchableOpacity>
 
@@ -42,6 +42,7 @@ export function RegisterDataScreen({ navigation }: any) {
             <TouchableOpacity
                 className="w-full bg-[#37a16a] p-4 rounded-xl items-center"
                 onPress={() => navigation.navigate('MainTabs')} // Proceed to app after registration
+                activeOpacity={0.8}
             >
                 <Text className="text-white font-semibold text-lg">Yakunlash</Text>
             </TouchableOpacity>

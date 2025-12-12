@@ -12,7 +12,7 @@ export function SettingsScreen({ navigation }: any) {
         <SafeAreaView className="flex-1 bg-white">
             {/* Header */}
             <View className="px-6 py-4 flex-row items-center justify-between border-b border-gray-100">
-                <TouchableOpacity onPress={() => navigation.goBack()} className="bg-gray-50 p-3 rounded-xl">
+                <TouchableOpacity onPress={() => navigation.goBack()} className="bg-gray-50 p-3 rounded-xl" activeOpacity={0.8}>
                     <ArrowLeft color="#374151" size={24} />
                 </TouchableOpacity>
                 <Text className="text-xl font-bold text-gray-900">Sozlamalar</Text>
@@ -27,7 +27,7 @@ export function SettingsScreen({ navigation }: any) {
                         <View className="w-28 h-28 bg-emerald-100 rounded-full items-center justify-center border-4 border-white shadow-lg overflow-hidden">
                             <User size={48} color="#37a16a" />
                         </View>
-                        <TouchableOpacity className="absolute bottom-0 right-0 bg-[#37a16a] p-2 rounded-full border-2 border-white shadow">
+                        <TouchableOpacity className="absolute bottom-0 right-0 bg-[#37a16a] p-2 rounded-full border-2 border-white shadow" activeOpacity={0.8}>
                             <Camera size={20} color="white" />
                         </TouchableOpacity>
                     </View>
@@ -72,6 +72,7 @@ export function SettingsScreen({ navigation }: any) {
                 <TouchableOpacity
                     className="bg-[#37a16a] w-full py-4 rounded-xl shadow-md flex-row justify-center items-center gap-2 mt-8"
                     onPress={() => navigation.goBack()}
+                    activeOpacity={0.8}
                 >
                     <Save color="white" size={24} />
                     <Text className="text-white font-bold text-lg">Saqlash</Text>

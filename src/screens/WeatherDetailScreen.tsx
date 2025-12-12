@@ -24,7 +24,7 @@ export function WeatherDetailScreen({ navigation, route }: any) {
     return (
         <SafeAreaView className="flex-1 bg-white">
             <View className="px-6 py-4 border-b border-gray-100 flex-row items-center gap-4">
-                <TouchableOpacity onPress={() => navigation.goBack()} className="p-2 bg-gray-50 rounded-xl">
+                <TouchableOpacity onPress={() => navigation.goBack()} className="p-2 bg-gray-50 rounded-xl" activeOpacity={0.8}>
                     <ArrowLeft color="#374151" size={24} />
                 </TouchableOpacity>
                 <Text className="text-xl font-bold text-gray-900">Ob-havo tafsilotlari</Text>

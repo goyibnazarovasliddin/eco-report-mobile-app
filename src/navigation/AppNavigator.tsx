@@ -21,6 +21,7 @@ import { ReportDetailScreen } from '../screens/ReportDetailScreen';
 import { WeatherDetailScreen } from '../screens/WeatherDetailScreen';
 import { AQIDetailScreen } from '../screens/AQIDetailScreen';
 import { HumidityDetailScreen } from '../screens/HumidityDetailScreen';
+import { NewsDetailScreen } from '../screens/NewsDetailScreen';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
 
 const Stack = createStackNavigator();
@@ -46,6 +47,7 @@ export function AppNavigator() {
       <Stack.Screen name="WeatherDetail" component={WeatherDetailScreen} />
       <Stack.Screen name="AQIDetail" component={AQIDetailScreen} />
       <Stack.Screen name="HumidityDetail" component={HumidityDetailScreen} />
+      <Stack.Screen name="NewsDetail" component={NewsDetailScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
     </Stack.Navigator>
   );

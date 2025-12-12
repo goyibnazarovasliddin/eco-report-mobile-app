@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Sparkles, Brain } from 'lucide-react-native';
+import { generateReportId } from '../utils/idUtils';
 
 export function AddAnalysisScreen({ navigation, route }: any) {
     const { photoUri, location } = route.params;
@@ -9,7 +10,8 @@ export function AddAnalysisScreen({ navigation, route }: any) {
     useEffect(() => {
         // Find me mock calculation
         const timer = setTimeout(() => {
-            navigation.replace('AddSuccess');
+            const newReportId = generateReportId();
+            navigation.replace('AddSuccess', { reportId: newReportId });
         }, 3000); // 3 seconds analysis simulation
 
         return () => clearTimeout(timer);

@@ -14,6 +14,7 @@ export function ProfileScreen({ navigation }: any) {
                 <TouchableOpacity
                     className="p-2 bg-gray-50 rounded-xl"
                     onPress={() => navigation.navigate('Settings')}
+                    activeOpacity={0.8}
                 >
                     <Settings color="#374151" size={24} />
                 </TouchableOpacity>
@@ -33,6 +34,7 @@ export function ProfileScreen({ navigation }: any) {
                     <TouchableOpacity
                         className="bg-white border border-green-200 rounded-2xl px-6 py-3 flex-row items-center gap-2 shadow-sm"
                         onPress={() => navigation.navigate('Level')}
+                        activeOpacity={0.8}
                     >
                         <Trophy color="#eab308" size={20} />
                         <Text className="text-gray-900 font-medium">Level 5: Eco Guardian</Text>
@@ -60,6 +62,7 @@ export function ProfileScreen({ navigation }: any) {
                     <TouchableOpacity
                         className="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex-row items-center gap-4"
                         onPress={() => navigation.navigate('MyReports')}
+                        activeOpacity={0.8}
                     >
                         <View className="bg-green-100 p-3 rounded-xl">
                             <FileText color="#37a16a" size={20} />
@@ -71,6 +74,7 @@ export function ProfileScreen({ navigation }: any) {
                     <TouchableOpacity
                         className="bg-gray-50 border border-gray-200 rounded-2xl p-4 flex-row items-center gap-4"
                         onPress={() => navigation.navigate('Help')}
+                        activeOpacity={0.8}
                     >
                         <View className="bg-blue-100 p-3 rounded-xl">
                             <HelpCircle color="#3b82f6" size={20} />
@@ -82,6 +86,7 @@ export function ProfileScreen({ navigation }: any) {
                     <TouchableOpacity
                         className="bg-red-50 border border-red-200 rounded-2xl p-4 flex-row items-center gap-4 mt-4"
                         onPress={() => navigation.navigate('Splash')}
+                        activeOpacity={0.8}
                     >
                         <View className="bg-red-100 p-3 rounded-xl">
                             <LogOut color="#ef4444" size={20} />

@@ -1,6 +1,6 @@
 export const MOCK_REPORTS = [
     {
-        id: '1',
+        id: 'ECO-20231210-A7B8C9',
         title: 'Chiqindi uyumi',
         address: 'Toshkent sh., Yunusobod t., 4-mavze',
         date: '10 Dekabr, 14:30',
@@ -11,7 +11,7 @@ export const MOCK_REPORTS = [
         description: 'Katta miqdorda qurilish chiqindilari tashlab ketilgan. Atrof-muhitga zarar yetkazyapti.'
     },
     {
-        id: '2',
+        id: 'ECO-20231209-X1Y2Z3',
         title: 'Suv ifloslanishi',
         address: 'Toshkent sh., Chilonzor t., Kanal bo\'yi',
         date: '09 Dekabr, 09:15',
@@ -22,7 +22,7 @@ export const MOCK_REPORTS = [
         description: 'Kanal suvi rangi o\'zgargan va noxush hid kelmoqda. Zudlik bilan tekshirish kerak.'
     },
     {
-        id: '3',
+        id: 'ECO-20231208-M4N5O6',
         title: 'Kesilgan daraxtlar',
         address: 'Toshkent sh., Mirzo Ulug\'bek t.',
         date: '08 Dekabr, 18:45',
@@ -33,7 +33,7 @@ export const MOCK_REPORTS = [
         description: 'Ruxsatsiz daraxtlar kesilishi kuzatildi. Hozirda to\'xtatilgan.'
     },
     {
-        id: '4',
+        id: 'ECO-20231207-P7Q8R9',
         title: 'Noxush hid',
         address: 'Toshkent sh., Sergeli t.',
         date: '07 Dekabr, 11:20',
@@ -44,7 +44,7 @@ export const MOCK_REPORTS = [
         description: 'Zavod tomonidan havoga zararli moddalar chiqarilmoqda.'
     },
     {
-        id: '5',
+        id: 'ECO-20231206-S1T2U3',
         title: 'Plastik chiqindilar',
         address: 'Toshkent sh., Yashnobod t.',
         date: '06 Dekabr, 16:50',

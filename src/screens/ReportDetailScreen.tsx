@@ -60,7 +60,7 @@ export function ReportDetailScreen({ navigation, route }: any) {
             done: true,
             icon: CheckCircle,
             color: 'bg-green-500',
-            iconColor: '#16a34a'
+            iconColor: '#ffffff'
         },
         {
             status: 'Idoraga topshirildi',
@@ -68,7 +68,7 @@ export function ReportDetailScreen({ navigation, route }: any) {
             done: fullData.status !== 'new',
             icon: Send,
             color: fullData.status !== 'new' ? 'bg-green-500' : 'bg-gray-200',
-            iconColor: fullData.status !== 'new' ? '#16a34a' : '#9ca3af'
+            iconColor: fullData.status !== 'new' ? '#ffffff' : '#9ca3af'
         },
         {
             status: 'Jarayonda',
@@ -76,7 +76,7 @@ export function ReportDetailScreen({ navigation, route }: any) {
             done: fullData.status === 'pending' || fullData.status === 'resolved',
             icon: Clock,
             color: (fullData.status === 'pending' || fullData.status === 'resolved') ? 'bg-green-500' : 'bg-gray-200',
-            iconColor: (fullData.status === 'pending' || fullData.status === 'resolved') ? '#16a34a' : '#9ca3af'
+            iconColor: (fullData.status === 'pending' || fullData.status === 'resolved') ? '#ffffff' : '#9ca3af'
         },
         {
             status: 'Hal qilindi',
@@ -84,14 +84,14 @@ export function ReportDetailScreen({ navigation, route }: any) {
             done: fullData.status === 'resolved',
             icon: CheckCircle,
             color: fullData.status === 'resolved' ? 'bg-green-500' : 'bg-gray-200',
-            iconColor: fullData.status === 'resolved' ? '#16a34a' : '#9ca3af'
+            iconColor: fullData.status === 'resolved' ? '#ffffff' : '#9ca3af'
         }
     ];
 
     return (
         <SafeAreaView className="flex-1 bg-white">
             <View className="px-6 py-4 border-b border-gray-100 flex-row items-center gap-4">
-                <TouchableOpacity onPress={() => navigation.goBack()} className="p-2 bg-gray-50 rounded-xl">
+                <TouchableOpacity onPress={() => navigation.goBack()} className="p-2 bg-gray-50 rounded-xl" activeOpacity={0.8}>
                     <ArrowLeft color="#374151" size={24} />
                 </TouchableOpacity>
                 <Text className="text-xl font-bold text-gray-900">Ariza tafsilotlari</Text>

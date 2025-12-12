@@ -3,7 +3,8 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Check, ArrowRight } from 'lucide-react-native';
 
-export function AddSuccessScreen({ navigation }: any) {
+export function AddSuccessScreen({ navigation, route }: any) {
+    const { reportId } = route.params || { reportId: '#ECO-11122025-134531' };
     return (
         <SafeAreaView className="flex-1 bg-white items-center justify-center p-6">
             <View className="bg-green-100 p-6 rounded-full mb-8">
@@ -20,7 +21,7 @@ export function AddSuccessScreen({ navigation }: any) {
             <View className="w-full bg-gray-50 p-4 rounded-2xl border border-gray-100 mb-8">
                 <View className="flex-row justify-between mb-2">
                     <Text className="text-gray-500">Ariza raqami:</Text>
-                    <Text className="font-bold text-gray-900">#ECO-11122025-134531</Text>
+                    <Text className="font-bold text-gray-900">#{reportId}</Text>
                 </View>
                 <View className="flex-row justify-between mb-2">
                     <Text className="text-gray-500">Holat:</Text>

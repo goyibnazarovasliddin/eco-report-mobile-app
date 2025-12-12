@@ -54,7 +54,7 @@ export function OnboardingScreen({ navigation }: any) {
         <SafeAreaView className="flex-1 bg-white">
             <View className="flex-1">
                 <View className="flex-row justify-end p-6">
-                    <TouchableOpacity onPress={handleSkip}>
+                    <TouchableOpacity onPress={handleSkip} activeOpacity={0.8}>
                         <Text className="text-gray-500 font-medium text-base">O'tkazib yuborish</Text>
                     </TouchableOpacity>
                 </View>

@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Bell, Leaf, Plus, Minus, Filter, Wind, Sun, Check, LocateFixed, X, Navigation, Droplets } from 'lucide-react-native';
 import * as Location from 'expo-location';
 import { MOCK_REPORTS } from '../data/mockReports';
+import { MOCK_NEWS } from '../data/mockNews';
 import { fetchWeather, fetchAQI, getWeatherDescription, getAQIDescription, getWeatherRecommendation } from '../services/api';
 import { getAQIColor, getHumidityColor, getTempColor } from '../utils/colorUtils';
 
@@ -162,7 +163,7 @@ export function HomeScreen({ navigation }: any) {
                         <Text className="text-sm text-gray-500">EcoReport</Text>
                     </View>
                 </View>
-                <TouchableOpacity className="relative p-2 bg-gray-50 rounded-xl" onPress={onNotifications}>
+                <TouchableOpacity className="relative p-2 bg-gray-50 rounded-xl" onPress={onNotifications} activeOpacity={0.8}>
                     <Bell color="#374151" size={24} />
                     <View className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
                 </TouchableOpacity>
@@ -205,13 +206,13 @@ export function HomeScreen({ navigation }: any) {
                     <View className="absolute top-0 w-full h-20 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
 
                     <View className="absolute top-4 right-4 gap-2">
-                        <TouchableOpacity onPress={onZoomIn} className="bg-white p-3 rounded-xl shadow-lg border border-gray-100 active:bg-gray-50">
+                        <TouchableOpacity onPress={onZoomIn} className="bg-white p-3 rounded-xl shadow-lg border border-gray-100 active:bg-gray-50" activeOpacity={0.8}>
                             <Plus color="#374151" size={24} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={onZoomOut} className="bg-white p-3 rounded-xl shadow-lg border border-gray-100 active:bg-gray-50">
+                        <TouchableOpacity onPress={onZoomOut} className="bg-white p-3 rounded-xl shadow-lg border border-gray-100 active:bg-gray-50" activeOpacity={0.8}>
                             <Minus color="#374151" size={24} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={onFindMe} className="bg-white p-3 rounded-xl shadow-lg border border-gray-100 active:bg-gray-50 mt-2">
+                        <TouchableOpacity onPress={onFindMe} className="bg-white p-3 rounded-xl shadow-lg border border-gray-100 active:bg-gray-50 mt-2" activeOpacity={0.8}>
                             <Navigation color={userLocation ? "#3b82f6" : "#374151"} size={24} fill={userLocation ? "#3b82f6" : "none"} />
                         </TouchableOpacity>
                     </View>
@@ -219,6 +220,7 @@ export function HomeScreen({ navigation }: any) {
                     <TouchableOpacity
                         className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-lg border border-gray-100 flex-row items-center gap-2"
                         onPress={() => setShowFilter(true)}
+                        activeOpacity={0.8}
                     >
                         <Filter color="#374151" size={18} />
                         <Text className="text-gray-900 font-bold">Filter</Text>
@@ -230,6 +232,7 @@ export function HomeScreen({ navigation }: any) {
                     <TouchableOpacity
                         onPress={() => navigation.navigate('WeatherDetail', { weather, locationName })} // Pass dynamic location name
                         className={`${wColor.bg} rounded-2xl p-4 flex-row justify-between items-center active:opacity-80`}
+                        activeOpacity={0.8}
                     >
                         <View className="flex-1 mr-2">
                             <Text className={`text-sm ${wColor.text} opacity-70 mb-1`}>Ob-havo</Text>
@@ -243,6 +246,7 @@ export function HomeScreen({ navigation }: any) {
                     <TouchableOpacity
                         onPress={() => navigation.navigate('AQIDetail', { aqiData: aqi, locationName })}
                         className={`${aColor.bg} rounded-2xl p-4 flex-row justify-between items-center active:opacity-80`}
+                        activeOpacity={0.8}
                     >
                         <View className="flex-1 mr-2">
                             <Text className={`text-sm ${aColor.text} opacity-70 mb-1`}>Havo sifati</Text>
@@ -263,6 +267,7 @@ export function HomeScreen({ navigation }: any) {
                     <TouchableOpacity
                         onPress={() => navigation.navigate('HumidityDetail', { humidity: aqi?.current?.humidity, locationName })}
                         className={`${hColor.bg} rounded-2xl p-4 flex-row justify-between items-center active:opacity-80`}
+                        activeOpacity={0.8}
                     >
                         <View className="flex-1 mr-2">
                             <Text className={`text-sm ${hColor.text} opacity-70 mb-1`}>Namlik (IQAir)</Text>
@@ -288,35 +293,30 @@ export function HomeScreen({ navigation }: any) {
                             decelerationRate="fast"
                             snapToInterval={CARD_WIDTH + 16}
                         >
-                            <View style={{ width: CARD_WIDTH }} className="bg-[#37a16a] rounded-2xl p-4 mr-4 h-40 justify-between">
-                                <View>
-                                    <View className="bg-white/20 self-start px-2 py-1 rounded-lg mb-2">
-                                        <Text className="text-white text-xs">Yangi</Text>
+                            {MOCK_NEWS.map((item) => (
+                                <TouchableOpacity
+                                    key={item.id}
+                                    style={{ width: CARD_WIDTH }}
+                                    className={`${item.color} rounded-2xl p-4 mr-4 h-48 justify-between active:opacity-90`}
+                                    onPress={() => navigation.navigate('NewsDetail', { news: item })}
+                                    activeOpacity={0.8}
+                                >
+                                    <View>
+                                        <View className="bg-white/20 self-start px-2 py-1 rounded-lg mb-2">
+                                            <Text className="text-white text-xs font-bold uppercase">
+                                                {item.type === 'new' ? 'Yangi' : item.type === 'campaign' ? 'Kampaniya' : 'Diqqat'}
+                                            </Text>
+                                        </View>
+                                        <Text className="text-white font-bold text-lg leading-6 mb-1" numberOfLines={2}>
+                                            {item.title}
+                                        </Text>
+                                        <Text className="text-white/80 text-sm leading-5" numberOfLines={2}>
+                                            {item.shortDescription}
+                                        </Text>
                                     </View>
-                                    <Text className="text-white font-bold text-lg leading-6">Toshkentda "Yashil Belbog'" loyihasi</Text>
-                                </View>
-                                <Text className="text-white/80 text-xs">2 soat oldin</Text>
-                            </View>
-
-                            <View style={{ width: CARD_WIDTH }} className="bg-blue-500 rounded-2xl p-4 mr-4 h-40 justify-between">
-                                <View>
-                                    <View className="bg-white/20 self-start px-2 py-1 rounded-lg mb-2">
-                                        <Text className="text-white text-xs">Kampaniya</Text>
-                                    </View>
-                                    <Text className="text-white font-bold text-lg leading-6">Plastiksiz kun: Ishtirok eting!</Text>
-                                </View>
-                                <Text className="text-white/80 text-xs">5 soat oldin</Text>
-                            </View>
-
-                            <View style={{ width: CARD_WIDTH }} className="bg-orange-500 rounded-2xl p-4 mr-4 h-40 justify-between">
-                                <View>
-                                    <View className="bg-white/20 self-start px-2 py-1 rounded-lg mb-2">
-                                        <Text className="text-white text-xs">Diqqat</Text>
-                                    </View>
-                                    <Text className="text-white font-bold text-lg leading-6">Dam olish kunlari hashari</Text>
-                                </View>
-                                <Text className="text-white/80 text-xs">1 kun oldin</Text>
-                            </View>
+                                    <Text className="text-white/80 text-xs font-medium mt-2">{item.date}</Text>
+                                </TouchableOpacity>
+                            ))}
                         </ScrollView>
                     </View>
 
@@ -441,6 +441,7 @@ export function HomeScreen({ navigation }: any) {
                                             setSelectedReport(null);
                                             navigation.navigate('ReportDetail', { report });
                                         }}
+                                        activeOpacity={0.8}
                                     >
                                         <Text className="text-white font-bold text-lg">Batafsil ko'rish</Text>
                                     </TouchableOpacity>

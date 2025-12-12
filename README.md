@@ -11,6 +11,40 @@ The EcoReport Mobile App is a React Native application built with Expo, designed
 -   **Navigation**: efficient file-based routing using `expo-router`.
 -   **Mock Mode**: Currently operates with mock data for testing and development.
 
+## 🎨 Design System & Legend
+
+This section documents the core colors, statuses, and UI elements used across the application to ensure consistency for future design and development work.
+
+### Color Palette
+
+| Name | Hex/Class | Usage |
+| :--- | :--- | :--- |
+| **Primary Green** | `#37a16a` | Main brand color, active buttons, primary icons, "Safe" status. |
+| **Secondary Blue** | `blue-500` / `#3b82f6` | Information, Weather widgets, actionable links, user location. |
+| **Warning Orange** | `orange-500` / `#f97316` | "Pending" status, "Unhealthy" AQI, alerts. |
+| **Danger Red** | `red-500` / `#ef4444` | "New" report status, "Hazardous" AQI, delete actions, errors. |
+| **Yellow** | `yellow-500` / `#eab308` | "Moderate" status, stars/ratings. |
+| **Gray** | `gray-500` / `#6b7280` | Secondary text, inactive icons, borders. |
+
+### Status Indicators
+
+The app uses a consistent color-coding system for report statuses and environmental metrics:
+
+-   **New / Danger**: Red (e.g., New Report, Bad Air Quality)
+-   **Pending / Warning**: Orange (e.g., Report In Progress, Moderate Air Quality)
+-   **Resolved / Good**: Green (e.g., Report Solved, Good Air Quality)
+
+### Typography
+
+-   **Headings**: Bold, primarily Gray-900.
+-   **Body**: Regular, Gray-700 or Gray-500 for secondary text.
+-   **System Font**: Uses the default system sans-serif font (San Francisco on iOS, Roboto on Android).
+
+### Icons
+
+-   **Library**: [Lucide React Native](https://lucide.dev/guide/packages/lucide-react-native)
+-   **Styling**: Icons typically match the text color or background theme of their container.
+
 ## 🛠 Tech Stack
 
 -   **Framework**: [React Native](https://reactnative.dev/) & [Expo](https://expo.dev/) (SDK 54)
