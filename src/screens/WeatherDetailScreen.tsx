@@ -8,7 +8,7 @@ export function WeatherDetailScreen({ navigation, route }: any) {
     const { weather, locationName } = route.params || {};
 
     // Fallback if accessed without params
-    const current = weather?.current || { temperature_2m: 24, weather_code: 0, wind_speed_10m: 10, relative_humidity_2m: 40 };
+    const current = weather?.current || { temperature_2m: 24, weather_code: 0, wind_speed_10m: 10, relative_humidity_2m: 40, apparent_temperature: 26 };
     const daily = weather?.daily || { time: [], temperature_2m_max: [], temperature_2m_min: [], weather_code: [] };
 
     const description = getWeatherDescription(current.weather_code);
@@ -21,6 +21,16 @@ export function WeatherDetailScreen({ navigation, route }: any) {
         return <Sun color={color} size={size} />;
     };
 
+    const getColor = (temp: number) => {
+        if (temp <= 0) return 'bg-blue-500 shadow-blue-200';
+        if (temp <= 15) return 'bg-cyan-500 shadow-cyan-200';
+        if (temp <= 25) return 'bg-green-500 shadow-green-200';
+        if (temp <= 35) return 'bg-orange-500 shadow-orange-200';
+        return 'bg-red-500 shadow-red-200';
+    };
+
+    const cardColor = getColor(current.temperature_2m);
+
     return (
         <SafeAreaView className="flex-1 bg-white">
             <View className="px-6 py-4 border-b border-gray-100 flex-row items-center gap-4">
@@ -32,7 +42,7 @@ export function WeatherDetailScreen({ navigation, route }: any) {
 
             <ScrollView className="flex-1 p-6" showsVerticalScrollIndicator={false}>
                 {/* Current Weather Card */}
-                <View className="bg-blue-500 rounded-3xl p-6 mb-6 shadow-lg shadow-blue-200">
+                <View className={`${cardColor} rounded-3xl p-6 mb-6 shadow-lg`}>
                     <View className="flex-row justify-between items-start">
                         <View>
                             <Text className="text-white/80 text-lg">{locationName || 'Toshkent'}</Text>
@@ -49,9 +59,9 @@ export function WeatherDetailScreen({ navigation, route }: any) {
                         </View>
                         <View className="w-0.5 bg-white/30" />
                         <View className="items-center flex-1">
-                            <Droplets color="white" size={20} />
-                            <Text className="text-white/80 text-xs mt-1">Namlik</Text>
-                            <Text className="text-white font-bold">{current.relative_humidity_2m}%</Text>
+                            <Thermometer color="white" size={20} />
+                            <Text className="text-white/80 text-xs mt-1">Sezilish</Text>
+                            <Text className="text-white font-bold">{Math.round(current.apparent_temperature || current.temperature_2m)}°</Text>
                         </View>
                     </View>
                 </View>

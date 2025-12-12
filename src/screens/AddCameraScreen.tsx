@@ -1,13 +1,22 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { X, FlipHorizontal, Zap, ZapOff } from 'lucide-react-native';
+import { X, FlipHorizontal, Zap, ZapOff, ArrowRight } from 'lucide-react-native';
 
-export function AddCameraScreen({ navigation }: any) {
+import { useEffect } from 'react';
+
+export function AddCameraScreen({ navigation, route }: any) {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
     const [flash, setFlash] = useState(false);
     const cameraRef = useRef<CameraView>(null);
+    const [capturedImages, setCapturedImages] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (route.params?.existingPhotos) {
+            setCapturedImages(route.params.existingPhotos);
+        }
+    }, [route.params]);
 
     if (!permission) {
         return <View />;
@@ -28,10 +37,41 @@ export function AddCameraScreen({ navigation }: any) {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     };
 
+    const handleClose = () => {
+        // "kamera pageda tep chap burchakdagi x bosilsa homepage qaytsin"
+        navigation.navigate('MainTabs');
+    };
+
     const takePicture = async () => {
         if (cameraRef.current) {
             const photo = await cameraRef.current.takePictureAsync();
-            navigation.navigate('AddLocation', { photo });
+            if (photo && photo.uri) {
+                // Check if we are replacing a specific index
+                if (route.params?.replaceIndex !== undefined && route.params?.replaceIndex !== null) {
+                    const updatedImages = [...capturedImages];
+                    updatedImages[route.params.replaceIndex] = photo.uri;
+                    // Go back to Review immediately with updated list
+                    navigation.navigate('ImageReview', { photos: updatedImages });
+                } else {
+                    // Normal "Add" mode
+                    const newImages = [...capturedImages, photo.uri];
+                    setCapturedImages(newImages);
+
+                    // If we reached 3, or if we were "Adding" from Review page (which implies we want to go back to review after taking one usually? 
+                    // User said: "uni bosib rasmni 3tagacha toldirish mumkni boladi". 
+                    // If user came from "Add" button in Review, they might want to take multiple until 3. 
+                    // Current logic: If 3, go to Review. 
+                    if (newImages.length >= 3) {
+                        navigation.navigate('ImageReview', { photos: newImages });
+                    }
+                }
+            }
+        }
+    };
+
+    const handleNext = () => {
+        if (capturedImages.length > 0) {
+            navigation.navigate('ImageReview', { photos: capturedImages });
         }
     };
 
@@ -49,7 +89,7 @@ export function AddCameraScreen({ navigation }: any) {
                 {/* Top Controls */}
                 <View style={styles.topControls}>
                     <TouchableOpacity
-                        onPress={() => navigation.goBack()}
+                        onPress={handleClose}
                         style={styles.iconButton}
                     >
                         <X color="white" size={28} />
@@ -63,28 +103,57 @@ export function AddCameraScreen({ navigation }: any) {
                     </TouchableOpacity>
                 </View>
 
-                {/* Instruction Banner */}
-                <View style={styles.instructionBanner}>
-                    <Text style={styles.instructionText}>Muammoni Suratga Oling</Text>
-                </View>
-
                 {/* Bottom Controls */}
-                <View style={styles.bottomControls}>
-                    <View style={{ width: 60 }} />
+                <View style={styles.bottomControlsContainer}>
 
-                    <TouchableOpacity
-                        onPress={takePicture}
-                        style={styles.captureButton}
-                    >
-                        <View style={styles.captureButtonInner} />
-                    </TouchableOpacity>
+                    {/* Instruction Banner - Moved to bottom */}
+                    <View style={styles.instructionBanner}>
+                        <Text style={styles.instructionText}>Muammoni Suratga Oling</Text>
+                    </View>
+                    <Text className="text-white text-xs text-center mb-4 opacity-70">Maksimum 3 tagacha rasm</Text>
 
-                    <TouchableOpacity
-                        onPress={toggleCameraFacing}
-                        style={styles.iconButton}
-                    >
-                        <FlipHorizontal color="white" size={28} />
-                    </TouchableOpacity>
+                    <View style={styles.bottomControls}>
+                        {/* Left: Thumbnail (Previous taken photo) */}
+                        <View style={{ width: 60, height: 60, justifyContent: 'center', alignItems: 'center' }}>
+                            {capturedImages.length > 0 ? (
+                                <TouchableOpacity
+                                    style={styles.thumbnailContainer}
+                                    onPress={() => navigation.navigate('ImageReview', { photos: capturedImages })}
+                                >
+                                    <Image source={{ uri: capturedImages[capturedImages.length - 1] }} style={styles.thumbnail} />
+                                    <View style={styles.badge}>
+                                        <Text style={styles.badgeText}>{capturedImages.length}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            ) : (
+                                <View style={{ width: 60 }} />
+                            )}
+                        </View>
+
+                        {/* Center: Capture Button */}
+                        <TouchableOpacity
+                            onPress={takePicture}
+                            style={styles.captureButton}
+                        >
+                            <View style={styles.captureButtonInner} />
+                        </TouchableOpacity>
+
+                        {/* Right: Next Button or Flip */}
+                        <View style={{ width: 60, height: 60, justifyContent: 'center', alignItems: 'center' }}>
+                            {capturedImages.length > 0 ? (
+                                <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
+                                    <ArrowRight color="white" size={24} />
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity
+                                    onPress={toggleCameraFacing}
+                                    style={styles.iconButton}
+                                >
+                                    <FlipHorizontal color="white" size={28} />
+                                </TouchableOpacity>
+                            )}
+                        </View>
+                    </View>
                 </View>
             </View>
         </View>
@@ -121,27 +190,32 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    bottomControlsContainer: {
+        paddingBottom: 40,
+        alignItems: 'center',
+    },
     instructionBanner: {
         alignSelf: 'center',
         backgroundColor: 'transparent',
         paddingHorizontal: 24,
-        paddingVertical: 12,
+        paddingVertical: 8, // Reduced vertical padding
         borderRadius: 16,
-        borderWidth: 2,
+        borderWidth: 1, // Thinner border
         borderColor: '#22c55e',
-        marginBottom: 6,
+        marginBottom: 4,
     },
     instructionText: {
         color: '#22c55e',
-        fontSize: 18,
+        fontSize: 16, // Slightly smaller
         fontWeight: 'bold',
     },
     bottomControls: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        width: '100%',
         paddingHorizontal: 40,
-        paddingBottom: 40,
+        marginTop: 10,
     },
     captureButton: {
         width: 80,
@@ -158,5 +232,43 @@ const styles = StyleSheet.create({
         height: 64,
         borderRadius: 32,
         backgroundColor: 'white',
+    },
+    thumbnailContainer: {
+        position: 'relative',
+        width: 56,
+        height: 56,
+    },
+    thumbnail: {
+        width: 56,
+        height: 56,
+        borderRadius: 8,
+        borderWidth: 2,
+        borderColor: 'white',
+    },
+    badge: {
+        position: 'absolute',
+        top: -6,
+        right: -6,
+        backgroundColor: '#ef4444',
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1.5,
+        borderColor: 'white',
+    },
+    badgeText: {
+        color: 'white',
+        fontSize: 10,
+        fontWeight: 'bold',
+    },
+    nextButton: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: '#22c55e',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });

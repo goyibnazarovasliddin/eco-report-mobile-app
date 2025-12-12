@@ -44,7 +44,7 @@ export const fetchWeather = async (lat: number, lon: number) => {
             params: {
                 latitude: lat,
                 longitude: lon,
-                current: 'temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m',
+                current: 'temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,apparent_temperature',
                 daily: 'weather_code,temperature_2m_max,temperature_2m_min',
                 timezone: 'auto'
             }

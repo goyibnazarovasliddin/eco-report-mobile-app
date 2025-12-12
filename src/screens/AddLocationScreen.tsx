@@ -93,7 +93,13 @@ export function AddLocationScreen({ navigation, route }: any) {
 
             <SafeAreaView className="absolute top-0 w-full pointer-events-none">
                 <View className="px-6 py-4 flex-row items-center justify-between pointer-events-auto">
-                    <TouchableOpacity onPress={() => navigation.goBack()} className="bg-white p-3 rounded-xl shadow-sm">
+                    <TouchableOpacity
+                        onPress={() => {
+                            // "report yuborishda lokatsiya tanlash pagedan chap tomon tepa burchakdagi orqaga tugma bosilganda rasmlarni review pagega otish kerak"
+                            navigation.navigate('ImageReview', { photos: route.params?.existingPhotos || [photoUri] });
+                        }}
+                        className="bg-white p-3 rounded-xl shadow-sm"
+                    >
                         <ArrowLeft color="#374151" size={24} />
                     </TouchableOpacity>
                     <View className="bg-white px-4 py-2 rounded-xl shadow-sm">

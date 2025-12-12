@@ -10,6 +10,7 @@ import { NotificationsScreen } from '../screens/NotificationsScreen';
 
 import { TabNavigator } from './TabNavigator';
 import { AddCameraScreen } from '../screens/AddCameraScreen';
+import { ImageReviewScreen } from '../screens/ImageReviewScreen';
 import { AddLocationScreen } from '../screens/AddLocationScreen';
 import { AddAnalysisScreen } from '../screens/AddAnalysisScreen';
 import { AddSuccessScreen } from '../screens/AddSuccessScreen';
@@ -36,6 +37,7 @@ export function AppNavigator() {
       <Stack.Screen name="RegisterData" component={RegisterDataScreen} />
       <Stack.Screen name="MainTabs" component={TabNavigator} />
       <Stack.Screen name="AddCamera" component={AddCameraScreen} options={{ headerShown: false, presentation: 'modal' }} />
+      <Stack.Screen name="ImageReview" component={ImageReviewScreen} options={{ headerShown: false, presentation: 'modal' }} />
       <Stack.Screen name="AddLocation" component={AddLocationScreen} />
       <Stack.Screen name="AddAnalysis" component={AddAnalysisScreen} />
       <Stack.Screen name="AddSuccess" component={AddSuccessScreen} />

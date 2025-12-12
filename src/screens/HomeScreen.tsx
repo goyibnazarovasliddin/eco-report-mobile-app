@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Modal, PanResponder, Dimensions, Image } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Bell, Leaf, Plus, Minus, Filter, Wind, Sun, Check, LocateFixed, X, Navigation, Droplets } from 'lucide-react-native';
+import { Bell, Leaf, Plus, Minus, Filter, Wind, Sun, Check, LocateFixed, X, Navigation, Droplets, Cloud, CloudRain } from 'lucide-react-native';
 import * as Location from 'expo-location';
 import { MOCK_REPORTS } from '../data/mockReports';
 import { MOCK_NEWS } from '../data/mockNews';
@@ -139,6 +139,13 @@ export function HomeScreen({ navigation }: any) {
     ).current;
 
     // Helpers for render
+    const getIcon = (code: number, size = 64, color = "black") => {
+        if (code === 0) return <Sun color={color} size={size} />;
+        if (code >= 1 && code <= 3) return <Cloud color={color} size={size} />;
+        if (code >= 51) return <CloudRain color={color} size={size} />;
+        return <Sun color={color} size={size} />;
+    };
+
     const wCurrent = weather?.current;
     const wDesc = wCurrent ? getWeatherDescription(wCurrent.weather_code) : 'Yuklanmoqda...';
     const wRec = wCurrent ? getWeatherRecommendation(wCurrent.weather_code, wCurrent.temperature_2m) : '';
@@ -240,7 +247,7 @@ export function HomeScreen({ navigation }: any) {
                             <Text className={`text-sm ${wColor.text} opacity-70 mb-1`}>{wDesc}</Text>
                             <Text className={`text-xs ${wColor.text} font-medium bg-white/40 self-start px-2 py-1 rounded-lg overflow-hidden`}>{wRec || 'Ma\'lumot olinmoqda...'}</Text>
                         </View>
-                        <Sun color={wColor.icon} size={64} />
+                        {wCurrent ? getIcon(wCurrent.weather_code, 64, wColor.icon) : <Sun color={wColor.icon} size={64} />}
                     </TouchableOpacity>
 
                     <TouchableOpacity

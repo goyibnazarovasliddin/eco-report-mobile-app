@@ -56,11 +56,13 @@ export function RegisterPhoneScreen({ navigation }: any) {
                             className="w-full h-14 bg-white border border-gray-200 rounded-2xl items-center flex-row justify-center gap-3"
                             activeOpacity={0.9}
                         >
-                            <Image
-                                source={require('../../assets/images/google-icon.png')}
-                                style={{ width: 24, height: 24 }}
-                                resizeMode="contain"
-                            />
+                            <View className="w-8 h-8 items-center justify-center border border-gray-200 rounded-full mr-2">
+                                <Image
+                                    source={require('../../assets/images/google-icon.png')}
+                                    style={{ width: 18, height: 18 }}
+                                    resizeMode="contain"
+                                />
+                            </View>
                             <Text className="text-gray-700 font-bold text-lg">Google bilan davom etish</Text>
                         </TouchableOpacity>
                     </View>
