@@ -6,6 +6,7 @@ import { Bell, Leaf, Plus, Minus, Filter, Wind, Sun, Check, LocateFixed, X, Navi
 import * as Location from 'expo-location';
 import { MOCK_REPORTS } from '../data/mockReports';
 import { fetchWeather, fetchAQI, getWeatherDescription, getAQIDescription, getWeatherRecommendation } from '../services/api';
+import { getAQIColor, getHumidityColor, getTempColor } from '../utils/colorUtils';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width - 48;
@@ -144,6 +145,11 @@ export function HomeScreen({ navigation }: any) {
     const aCurrent = aqi?.current?.us_aqi;
     const aInfo = aCurrent ? getAQIDescription(aCurrent) : null;
 
+    // Dynamic Colors
+    const wColor = wCurrent ? getTempColor(wCurrent.temperature_2m) : { bg: 'bg-blue-50', text: 'text-blue-900', icon: '#EAB308' };
+    const aColor = aCurrent ? getAQIColor(aCurrent) : { bg: 'bg-green-50', text: 'text-green-900', border: 'border-green-100', icon: '#16A34A' };
+    const hColor = aqi?.current?.humidity ? getHumidityColor(aqi.current.humidity) : { bg: 'bg-blue-50', text: 'text-blue-900', border: 'border-blue-100', icon: '#3B82F6' };
+
     return (
         <SafeAreaView className="flex-1 bg-white">
             <View className="px-6 pt-4 pb-4 bg-white border-b border-gray-100 flex-row items-center justify-between">
@@ -223,50 +229,50 @@ export function HomeScreen({ navigation }: any) {
                 <View className="px-6 py-6 gap-4">
                     <TouchableOpacity
                         onPress={() => navigation.navigate('WeatherDetail', { weather, locationName })} // Pass dynamic location name
-                        className="bg-blue-50 rounded-2xl p-4 flex-row justify-between items-center active:bg-blue-100"
+                        className={`${wColor.bg} rounded-2xl p-4 flex-row justify-between items-center active:opacity-80`}
                     >
                         <View className="flex-1 mr-2">
-                            <Text className="text-sm text-blue-900 opacity-70 mb-1">Ob-havo</Text>
-                            <Text className="text-3xl text-blue-900 font-bold mb-1">{wCurrent ? Math.round(wCurrent.temperature_2m) : '--'}°C</Text>
-                            <Text className="text-sm text-blue-900 opacity-70 mb-1">{wDesc}</Text>
-                            <Text className="text-xs text-blue-800 font-medium bg-blue-100 self-start px-2 py-1 rounded-lg overflow-hidden">{wRec || 'Ma\'lumot olinmoqda...'}</Text>
+                            <Text className={`text-sm ${wColor.text} opacity-70 mb-1`}>Ob-havo</Text>
+                            <Text className={`text-3xl ${wColor.text} font-bold mb-1`}>{wCurrent ? Math.round(wCurrent.temperature_2m) : '--'}°C</Text>
+                            <Text className={`text-sm ${wColor.text} opacity-70 mb-1`}>{wDesc}</Text>
+                            <Text className={`text-xs ${wColor.text} font-medium bg-white/40 self-start px-2 py-1 rounded-lg overflow-hidden`}>{wRec || 'Ma\'lumot olinmoqda...'}</Text>
                         </View>
-                        <Sun color="#EAB308" size={64} />
+                        <Sun color={wColor.icon} size={64} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => navigation.navigate('AQIDetail', { aqiData: aqi, locationName })}
-                        className="bg-green-50 rounded-2xl p-4 flex-row justify-between items-center active:bg-green-100"
+                        className={`${aColor.bg} rounded-2xl p-4 flex-row justify-between items-center active:opacity-80`}
                     >
                         <View className="flex-1 mr-2">
-                            <Text className="text-sm text-green-900 opacity-70 mb-1">Havo sifati</Text>
+                            <Text className={`text-sm ${aColor.text} opacity-70 mb-1`}>Havo sifati</Text>
                             <View className="flex-row items-baseline gap-2 mb-1">
-                                <Text className="text-3xl text-green-900 font-bold">{aCurrent || '--'}</Text>
+                                <Text className={`text-3xl ${aColor.text} font-bold`}>{aCurrent || '--'}</Text>
                                 {aInfo && (
                                     <View className={`${aInfo.color} rounded-full px-2 py-1`}>
                                         <Text className="text-white text-xs">{aInfo.status}</Text>
                                     </View>
                                 )}
                             </View>
-                            <Text className="text-sm text-green-900 opacity-70 mt-1 mb-1">AQI indeksi</Text>
-                            <Text className="text-xs text-green-800 font-medium bg-green-100 self-start px-2 py-1 rounded-lg overflow-hidden">{aInfo?.advice || 'Ma\'lumot olinmoqda...'}</Text>
+                            <Text className={`text-sm ${aColor.text} opacity-70 mt-1 mb-1`}>AQI indeksi</Text>
+                            <Text className={`text-xs ${aColor.text} font-medium bg-white/40 self-start px-2 py-1 rounded-lg overflow-hidden`}>{aInfo?.advice || 'Ma\'lumot olinmoqda...'}</Text>
                         </View>
-                        <Wind color="#16A34A" size={48} />
+                        <Wind color={aColor.icon} size={48} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => navigation.navigate('HumidityDetail', { humidity: aqi?.current?.humidity, locationName })}
-                        className="bg-blue-50 rounded-2xl p-4 flex-row justify-between items-center active:bg-blue-100"
+                        className={`${hColor.bg} rounded-2xl p-4 flex-row justify-between items-center active:opacity-80`}
                     >
                         <View className="flex-1 mr-2">
-                            <Text className="text-sm text-blue-900 opacity-70 mb-1">Namlik (IQAir)</Text>
-                            <Text className="text-3xl text-blue-900 font-bold mb-1">{aqi?.current?.humidity ? aqi.current.humidity + '%' : '--'}</Text>
-                            <Text className="text-sm text-blue-900 opacity-70 mb-1">Havo namligi</Text>
-                            <Text className="text-xs text-blue-800 font-medium bg-blue-100 self-start px-2 py-1 rounded-lg overflow-hidden">
+                            <Text className={`text-sm ${hColor.text} opacity-70 mb-1`}>Namlik (IQAir)</Text>
+                            <Text className={`text-3xl ${hColor.text} font-bold mb-1`}>{aqi?.current?.humidity ? aqi.current.humidity + '%' : '--'}</Text>
+                            <Text className={`text-sm ${hColor.text} opacity-70 mb-1`}>Havo namligi</Text>
+                            <Text className={`text-xs ${hColor.text} font-medium bg-white/40 self-start px-2 py-1 rounded-lg overflow-hidden`}>
                                 {aqi?.current?.humidity > 60 ? 'Yuqori namlik' : aqi?.current?.humidity < 30 ? 'Quruq havo' : 'Me\'yorda'}
                             </Text>
                         </View>
-                        <Droplets color="#3B82F6" size={64} />
+                        <Droplets color={hColor.icon} size={64} />
                     </TouchableOpacity>
 
                     <View className="mb-4 -mx-6">
